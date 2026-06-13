@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — S1 · S2 · S3</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #f6f5f3;
+  --ink-soft: #d5d3cf;
+  --ink-muted: #a8a49f;
+  --paper: #0b0b0b;
+  --paper-warm: #0f0f0f;
+  --accent: #c7a15a;
+  --accent-deep: #8d6b2f;
+  --off-white: #0f0f0f;
+  --s1: #2a4a6b;
+  --s2: #3d2a5e;
+  --s3: #2a5a4a;
+  --nav-h: 72px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Merriweather', serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: auto;
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4rem;
+  z-index: 100;
+  background: rgba(11,11,11,0.7);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.nav-logo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+}
+.nav-links { display: flex; gap: 3.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent-deep); }
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 9rem 4rem 6rem 6rem;
+  position: relative; z-index: 2;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-deep); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-eyebrow::before {
+  content: ''; display: inline-block;
+  width: 30px; height: 1px; background: var(--accent-deep);
+}
+h1.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6.5vw, 6rem);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: -0.025em; color: var(--ink);
+  margin-bottom: 2rem;
+}
+h1.hero-name em { font-style: italic; color: var(--accent-deep); }
+.hero-desc {
+  font-size: 1.02rem; line-height: 1.8;
+  color: var(--ink-soft); max-width: 420px; margin-bottom: 3rem;
+}
+.hero-ctas { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--ink); color: var(--paper);
+  padding: 0.85rem 2rem; font-size: 0.78rem;
+  font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--accent-deep); transform: translateY(-2px); }
+ .btn-primary { cursor: pointer; }
+.btn-ghost {
+  color: var(--ink-soft); padding: 0.85rem 0;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; border-bottom: 1px solid currentColor; cursor: none;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--accent-deep); }
+ .btn-ghost { cursor: pointer; }
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 6rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+}
+.scroll-line {
+  width: 44px; height: 1px; background: var(--ink-muted);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{transform:scaleX(1);opacity:.4} 50%{transform:scaleX(1.4);opacity:1} }
+@keyframes heroRight { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:none} }
+
+.hero-left > * {
+  opacity: 0; transform: translateY(18px);
+  animation: heroIn 0.75s ease forwards;
+}
+.hero-eyebrow{animation-delay:0.15s} h1.hero-name{animation-delay:0.32s}
+.hero-desc{animation-delay:0.48s} .hero-ctas{animation-delay:0.62s}
+@keyframes heroIn { to{opacity:1;transform:none} }
+
+section { padding: 8rem 6rem; position: relative; }
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.67rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-deep);
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+.section-label::before {
+  content: ''; display: inline-block;
+  width: 28px; height: 1px; background: var(--accent-deep);
+}
+h2.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.015em; color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+h2.section-title em { font-style: italic; color: var(--accent-deep); }
+
+.about-section { background: var(--off-white); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1.7fr;
+  gap: 6rem; align-items: start; margin-top: 2.5rem;
+}
+.about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.5rem; }
+.skill-tag {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.09em; padding: 0.3rem 0.8rem;
+  border: 1px solid var(--ink-muted); color: var(--ink-soft);
+  text-transform: uppercase; transition: all 0.2s; cursor: none;
+}
+.skill-tag:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+ .skill-tag { cursor: pointer; }
+.stat-row {
+  display: flex; gap: 3rem; margin-top: 2.5rem;
+  padding-top: 2.5rem; border-top: 1px solid var(--paper-warm);
+}
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 900; color: var(--ink); line-height: 1;
+}
+.stat-label {
+  font-size: 0.72rem; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--ink-muted); margin-top: 0.2rem;
+}
+.about-text p {
+  font-size: 1.02rem; line-height: 1.85;
+  color: var(--ink-soft); margin-bottom: 1.5rem;
+}
+.about-text strong { color: var(--ink); font-weight: 600; }
+.about-pull {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-style: italic; line-height: 1.5;
+  color: var(--ink); border-left: 3px solid var(--accent);
+  padding-left: 1.5rem; margin: 2rem 0;
+}
+
+.projects-section { background: var(--paper); padding: 8rem 6rem; }
+.projects-section .section-label { color: var(--accent); }
+.projects-section .section-label::before { background: var(--accent); }
+.projects-section h2.section-title { color: var(--paper); }
+.projects-intro {
+  font-size: 0.97rem; line-height: 1.75;
+  color: rgba(247,244,239,0.5);
+  max-width: 540px; margin-bottom: 4rem;
+}
+
+.semester-block { margin-bottom: 5rem; }
+.semester-block:last-child { margin-bottom: 0; }
+.sem-header {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-bottom: 2rem; padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sem-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 900;
+  color: var(--ink); opacity: 0.16;
+}
+.sem-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.4rem 0.9rem; border: 1px solid;
+}
+.sem-pill.s1 { color: #7fabd4; border-color: #7fabd4; }
+.sem-pill.s2 { color: #a990d4; border-color: #a990d4; }
+.sem-pill.s3 { color: #70c4a8; border-color: #70c4a8; }
+.sem-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; color: rgba(247,244,239,0.3); letter-spacing: 0.1em;
+  margin-left: auto;
+}
+
+.semester-heading { margin: 3.5rem 0 1.25rem; }
+.big-sem-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(1.6rem, 3.8vw, 3rem);
+  color: var(--ink); font-weight: 700; letter-spacing: 0.02em;
+}
+.sem-divider {
+  height: 1px; background: rgba(255,255,255,0.06); margin-top: 0.85rem; width: 100%;
+}
+
+.cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; }
+.cards-grid.two-col { grid-template-columns: repeat(2,1fr); }
+
+.proj-card {
+  background: #0f0f0f; padding: 2.2rem;
+  position: relative; overflow: hidden;
+  cursor: pointer; transition: background 0.25s;
+  display: flex; flex-direction: column;
+}
+.proj-card:hover { background: #1a1a1a; }
+.proj-card:hover .proj-arrow { transform: translate(4px,-4px); }
+.proj-card.wide { grid-column: span 2; }
+.proj-card.accent-card { background: rgba(199,161,90,0.08); border: 1px solid rgba(199,161,90,0.12); }
+.proj-card.accent-card:hover { background: rgba(199,161,90,0.12); }
+
+.proj-card.green-card, .proj-card.accent-card { display: none !important; }
+.proj-card.blue-card { background: #192640; }
+.proj-card.blue-card:hover { background: #1f3050; }
+.proj-card.purple-card { background: #1e1530; }
+.proj-card.purple-card:hover { background: #251a3b; }
+.proj-card.green-card { background: #122a22; }
+.proj-card.green-card:hover { background: #183520; }
+
+.proj-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  color: var(--accent); margin-bottom: 1.2rem;
+}
+.proj-sem-tag {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.18rem 0.55rem; border: 1px solid;
+  margin-bottom: 0.85rem; align-self: flex-start;
+}
+.s1-tag { color: #7fabd4; border-color: #7fabd4; }
+.s2-tag { color: #a990d4; border-color: #a990d4; }
+.s3-tag { color: #70c4a8; border-color: #70c4a8; }
+
+.proj-category {
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(247,244,239,0.35); margin-bottom: 0.5rem;
+}
+.proj-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--paper); line-height: 1.25; margin-bottom: 0.85rem;
+  flex: 1;
+}
+.proj-card.wide .proj-title { font-size: 1.75rem; }
+.proj-desc {
+  font-size: 0.84rem; line-height: 1.7;
+  color: rgba(247,244,239,0.5); margin-bottom: 1.5rem;
+}
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.proj-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(247,244,239,0.15);
+  color: rgba(247,244,239,0.4); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.proj-arrow {
+  position: absolute; bottom: 1.75rem; right: 1.75rem;
+  font-size: 1.3rem; color: var(--accent);
+  transition: transform 0.22s;
+}
+.proj-yt {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #ff6b6b; margin-top: 0.75rem; text-decoration: none;
+}
+.proj-yt::before { content: '▶'; font-size: 0.7rem; }
+
+footer {
+  background: var(--paper);
+  padding: 6rem 6rem 3.5rem; position: relative; overflow: hidden;
+}
+.footer-ghost {
+  position: absolute; font-family: 'Playfair Display', serif;
+  font-size: 20rem; font-weight: 900;
+  color: rgba(255,255,255,0.02);
+  bottom: -5rem; right: -2rem;
+  line-height: 1; user-select: none; pointer-events: none;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; position: relative;
+}
+.footer-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 900; color: var(--paper);
+  line-height: 1.05; margin-bottom: 1.25rem;
+}
+.footer-heading em { font-style: italic; color: var(--accent); }
+.footer-sub {
+  font-size: 0.95rem; line-height: 1.75;
+  color: rgba(247,244,239,0.45); max-width: 380px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+.footer-links a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: rgba(247,244,239,0.3); text-decoration: none;
+  display: flex; align-items: center; gap: 0.75rem;
+  transition: color 0.2s; cursor: none;
+}
+.footer-links a span { font-size: 0.8rem; transition: transform 0.2s; }
+.footer-links a:hover { color: var(--paper); }
+.footer-links a:hover span { transform: translate(4px,-4px); }
+ .footer-links a { cursor: pointer; }
+.footer-bottom {
+  grid-column: span 2;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 2rem; margin-top: 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace; font-size: 0.64rem;
+  letter-spacing: 0.1em; color: rgba(247,244,239,0.2); text-transform: uppercase;
+}
+.fade-up {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+@media (max-width: 960px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 8rem 2rem 5rem; }
+  section, .projects-section { padding: 5rem 2rem; }
+  footer { padding: 4rem 2rem 3rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .cards-grid, .cards-grid.two-col { grid-template-columns: 1fr; }
+  .proj-card.wide { grid-column: span 1; }
+  .lo-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-bottom { grid-column: span 1; flex-direction: column; gap: 0.75rem; }
+  .hero-scroll { left: 2rem; }
+}
+</style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+<div class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Fontys ICT · Semester 1 · 2 · 3</div>
+    <h1 class="hero-name">
+      Dean.<br>Azghari.<br>
+    </h1>
+    <p class="hero-desc">
+      A portfolio spanning three semesters — from JavaScript games and Flutter apps to brand identities, documentaries, and streetwear culture sites. This is everything I've made, and who I'm becoming.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">See All Projects</a>
+      <a href="#about" class="btn-ghost">About Me</a>
+    </div>
+  </div>
+    <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
+
+<section class="about-section" id="about">
+  <div class="section-label">Who I am</div>
+  <div class="about-grid">
+    <div class="fade-up">
+      <h2 class="section-title">Designer &<br><em>Developer</em></h2>
+      <div class="about-tags">
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Flutter</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">HTML / CSS</span>
+        <span class="skill-tag">UI/UX</span>
+        <span class="skill-tag">Branding</span>
+        <span class="skill-tag">Motion</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Adobe </span>
+        <span class="skill-tag">Film / Docs</span>
+        <span class="skill-tag">Content Strategy</span>
+      </div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-number">3</div>
+          <div class="stat-label">Semesters</div>
+        </div>
+        <div>
+          <div class="stat-number">10</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div>
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Iterations</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text fade-up delay-1">
+      <p>
+        I'm a <strong>creative at Fontys ICT</strong> who codes, designs, films, and brands. My work doesn't sit neatly in one box — I've built games in JavaScript, mobile apps in Flutter, full-stack webapps in Python, and brand identities from scratch.
+      </p>
+      <div class="about-pull">
+        "Show, don't tell — I let the work speak."
+      </div>
+      <p>
+        Over three semesters I've worked with real clients — a <strong>DJ/producer with zero branding</strong>, a healthcare platform (<strong>CZ Zorgvinder</strong>). I've also made things purely because I was immersed in it: a <strong>rap streetwear deep-dive</strong>, a travel guide webapp.
+      </p>
+      <p>
+        This portfolio is an honest record of my journey.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section" id="projects">
+  <div class="section-label">All work</div>
+  <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Ten Projects</em></h2>
+  <p class="projects-intro">Every project I made — real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
+
+  <div class="semester-heading">
+    <div class="sem-divider"></div>
+  </div>
+  <div class="semester-block fade-up">
+      <div class="sem-header">
+      <span class="sem-pill s1">Semester 1</span>
+      <span class="sem-count">4 projects</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">01</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Game Dev</span>
+        <div class="proj-category">JavaScript · Canvas</div>
+        <div class="proj-title">Super Mario — Browser Game</div>
+        <p class="proj-desc">A fully playable Mario-style platformer built from scratch in vanilla JavaScript. Custom collision detection, sprite animation, level design — no frameworks, no shortcuts.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Canvas API</span>
+          <span class="proj-tag">Game Logic</span>
+          <span class="proj-tag">Sprite Animation</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">02</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Mobile</span>
+        <div class="proj-category">Flutter · Android Studio</div>
+        <div class="proj-title">PTSO — Clothing App</div>
+        <p class="proj-desc">A cross-platform clothing app built with Flutter in Android Studio. Designed the UI, built the product browsing and cart flows, and handled the full development cycle end-to-end.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Flutter</span>
+          <span class="proj-tag">Dart</span>
+          <span class="proj-tag">Android Studio</span>
+          <span class="proj-tag">UI Design</span>
+          <span class="proj-tag">Mobile</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">03</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Web Dev</span>
+        <div class="proj-category">Python · HTML · CSS · JS</div>
+        <div class="proj-title">Messaging Web App</div>
+        <p class="proj-desc">A real-time texting webapp with a Python backend and a custom HTML/CSS/JS frontend. User auth, live message threads, and a clean UI — my first full-stack build.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Flask</span>
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Full-stack</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card accent-card wide">
+        <div class="proj-num">04</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Web Design</span>
+        <div class="proj-category">HTML · CSS · JavaScript</div>
+        <div class="proj-title">Travel Guide — UI Showcase</div>
+        <p class="proj-desc">A polished travel guide webapp with rich UI detail — custom layouts, smooth interactions, animated components. This was the project where design and code finally clicked for me. Built purely with HTML, CSS and JavaScript, no frameworks.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML</span>
+          <span class="proj-tag">CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">UI Design</span>
+          <span class="proj-tag">Animations</span>
+          <span class="proj-tag">Responsive</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="semester-heading">
+    <div class="sem-divider"></div>
+  </div>
+  <div class="semester-block fade-up delay-1">
+    <div class="sem-header">
+      <span class="sem-pill s2">Semester 2</span>
+      <span class="sem-count">3 projects</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="proj-card purple-card wide">
+        <div class="proj-num">05</div>
+        <span class="proj-sem-tag s2-tag">Semester 2 · UX · Client</span>
+        <div class="proj-category">UX Research · UI Design · Group Project</div>
+        <div class="proj-title">CZ Zorgvinder — UX Improvement</div>
+        <p class="proj-desc">A real client project with CZ, one of the Netherlands' largest health insurers. Our team audited and redesigned the Zorgvinder platform — improving information architecture, user flows, and interface clarity. Deep UX research: user interviews, usability testing, heuristic evaluation, wireframes, and a refined UI layer on top.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">UX Research</span>
+          <span class="proj-tag">User Testing</span>
+          <span class="proj-tag">Wireframing</span>
+          <span class="proj-tag">UI Design</span>
+          <span class="proj-tag">Figma</span>
+          <span class="proj-tag">Healthcare</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card purple-card">
+        <div class="proj-num">06</div>
+        <span class="proj-sem-tag s2-tag">Semester 2 · Branding · Film</span>
+        <div class="proj-category">Documentary · Brand Identity · Client</div>
+        <div class="proj-title">DJ / Producer — Brand & Documentary</div>
+        <p class="proj-desc">Our client was a DJ and producer with zero existing branding. Our team built his entire visual identity. My personal contribution: I made a documentary about him — filmed, directed, and edited. It's live on YouTube.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Documentary</span>
+          <span class="proj-tag">Videography</span>
+          <span class="proj-tag">Editing</span>
+          <span class="proj-tag">Branding</span>
+        </div>
+        <a class="proj-yt" href="#" target="_blank">Watch on YouTube</a>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card green-card">
+        <div class="proj-num">07</div>
+        <span class="proj-sem-tag s2-tag">Semester 2 · Personal</span>
+        <div class="proj-category">Web Design · Cultural Research</div>
+        <div class="proj-title">Rap Streetwear — Culture Site</div>
+        <p class="proj-desc">My personal project: a stunning editorial website exploring the intersection of rap music and streetwear — rappers, their brands, and their cultural influence. Heavily designed, content-rich, and fully mine.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Editorial Design</span>
+          <span class="proj-tag">Culture</span>
+          <span class="proj-tag">Research</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-ghost">PF</div>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-heading">Let's<br><em>Connect</em></div>
+      <p class="footer-sub">This portfolio grows every semester. If you're a teacher, collaborator, or just curious — reach out.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:flex-end;">
+      <ul class="footer-links">
+        <li><a href="mailto:your@email.com">Email me <span>↗</span></a></li>
+        <li><a href="#" target="_blank">GitHub <span>↗</span></a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 · Portfolio S1–S3 · Fontys ICT</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
