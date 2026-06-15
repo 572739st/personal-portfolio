@@ -295,6 +295,7 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   position: absolute; bottom: 1.75rem; right: 1.75rem;
   font-size: 1.3rem; color: var(--accent);
   transition: transform 0.22s;
+  display: none;
 }
 .proj-yt {
   display: inline-flex; align-items: center; gap: 0.45rem;
@@ -303,6 +304,42 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   color: #ff6b6b; margin-top: 0.75rem; text-decoration: none;
 }
 .proj-yt::before { content: '▶'; font-size: 0.7rem; }
+.proj-file {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #6fb3ff; margin-top: 0.75rem; text-decoration: none;
+}
+.proj-file::before { content: '⬇'; font-size: 0.7rem; }
+.proj-game {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #4ecdc4; margin-top: 0.75rem; text-decoration: none;
+}
+.proj-game::before { content: '▶'; font-size: 0.7rem; }
+.proj-presentation {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-top: 0.75rem; text-decoration: none;
+  background: none; border: none; cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.proj-presentation::before { content: '▶'; font-size: 0.7rem; }
+.proj-presentation:hover { color: var(--accent-deep); }
+.proj-video {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #ff6b6b; margin-top: 0.75rem; text-decoration: none;
+  background: none; border: none; cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.proj-video::before { content: '▶'; font-size: 0.7rem; }
+.proj-video:hover { color: #ff5252; }
 
 footer {
   background: var(--paper);
@@ -361,6 +398,194 @@ footer {
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
 .delay-4 { transition-delay: 0.4s; }
+
+.presentation-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+}
+
+.presentation-gallery.visible {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.presentation-slide {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.presentation-slide:hover {
+  transform: scale(1.02);
+  border-color: var(--accent);
+}
+
+.presentation-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.presentation-slide-num {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(11,11,11,0.7);
+  padding: 0.3rem 0.6rem;
+  border-radius: 2px;
+  color: var(--accent);
+}
+
+/* Lightbox Modal */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11,11,11,0.95);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.lightbox-modal.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1001;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover {
+  color: var(--ink);
+}
+
+.lightbox-nav {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  color: var(--ink-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.lightbox-nav button {
+  background: var(--accent);
+  color: var(--paper);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lightbox-nav button:hover {
+  background: var(--accent-deep);
+}
+
+.lightbox-nav button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Video Modal */
+.video-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11,11,11,0.95);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.video-modal.active {
+  display: flex;
+}
+
+.video-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-element {
+  max-width: 100%;
+  max-height: 90vh;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.video-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1001;
+  transition: color 0.2s;
+}
+
+.video-close:hover {
+  color: var(--ink);
+}
 
 @media (max-width: 960px) {
   nav { padding: 0 1.5rem; }
@@ -435,7 +660,7 @@ footer {
           <div class="stat-label">Semesters</div>
         </div>
         <div>
-          <div class="stat-number">10</div>
+          <div class="stat-number">7</div>
           <div class="stat-label">Projects</div>
         </div>
         <div>
@@ -463,7 +688,7 @@ footer {
 
 <section class="projects-section" id="projects">
   <div class="section-label">All work</div>
-  <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Ten Projects</em></h2>
+  <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Seven Projects</em></h2>
   <p class="projects-intro">Every project I made — real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
 
   <div class="semester-heading">
@@ -472,7 +697,7 @@ footer {
   <div class="semester-block fade-up">
       <div class="sem-header">
       <span class="sem-pill s1">Semester 1</span>
-      <span class="sem-count">4 projects</span>
+      <span class="sem-count">5 projects</span>
     </div>
     <div class="cards-grid">
 
@@ -488,6 +713,7 @@ footer {
           <span class="proj-tag">Game Logic</span>
           <span class="proj-tag">Sprite Animation</span>
         </div>
+        <a class="proj-game" href="mario game latest version/mario game/mario.html" target="_blank" rel="noopener noreferrer">Play Game</a>
         <div class="proj-arrow">↗</div>
       </div>
 
@@ -504,6 +730,7 @@ footer {
           <span class="proj-tag">UI Design</span>
           <span class="proj-tag">Mobile</span>
         </div>
+        <button class="proj-video" id="ptso-video-btn" data-video-src="ptso video.mp4">Watch Video</button>
         <div class="proj-arrow">↗</div>
       </div>
 
@@ -520,6 +747,7 @@ footer {
           <span class="proj-tag">JavaScript</span>
           <span class="proj-tag">Full-stack</span>
         </div>
+        <button class="proj-video" id="cryptext-video-btn" data-video-src="crypText screen recording 22 mei.mp4">Watch Video</button>
         <div class="proj-arrow">↗</div>
       </div>
 
@@ -540,6 +768,24 @@ footer {
         <div class="proj-arrow">↗</div>
       </div>
 
+      <div class="proj-card blue-card">
+        <div class="proj-num">05</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Travel · UX</span>
+        <div class="proj-category">HTML · CSS · JavaScript</div>
+        <div class="proj-title">Arivana — Travel Guide</div>
+        <p class="proj-desc">A travel web app for sustainable and affordable journeys with a premium VIP experience. The challenge was balancing functionality with a visually rich, accessible interface while keeping the product practical and well-organized.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML</span>
+          <span class="proj-tag">CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">UX</span>
+          <span class="proj-tag">Travel</span>
+          <span class="proj-tag">AI</span>
+        </div>
+        <button class="proj-video" id="arivana-video-btn" data-video-src="Arivana screen recording.mp4">Watch Video</button>
+        <div class="proj-arrow">↗</div>
+      </div>
+
     </div>
   </div>
 
@@ -554,7 +800,7 @@ footer {
     <div class="cards-grid">
 
       <div class="proj-card purple-card wide">
-        <div class="proj-num">05</div>
+        <div class="proj-num">06</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · UX · Client</span>
         <div class="proj-category">UX Research · UI Design · Group Project</div>
         <div class="proj-title">CZ Zorgvinder — UX Improvement</div>
@@ -567,11 +813,34 @@ footer {
           <span class="proj-tag">Figma</span>
           <span class="proj-tag">Healthcare</span>
         </div>
+        <button class="proj-presentation" id="presentation-toggle">See Presentation</button>
+        <div class="presentation-gallery" id="presentation-gallery">
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide1.PNG" alt="Slide 1"><div class="presentation-slide-num">01</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide2.PNG" alt="Slide 2"><div class="presentation-slide-num">02</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide3.PNG" alt="Slide 3"><div class="presentation-slide-num">03</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide4.PNG" alt="Slide 4"><div class="presentation-slide-num">04</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide5.PNG" alt="Slide 5"><div class="presentation-slide-num">05</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide6.PNG" alt="Slide 6"><div class="presentation-slide-num">06</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide7.PNG" alt="Slide 7"><div class="presentation-slide-num">07</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide8.PNG" alt="Slide 8"><div class="presentation-slide-num">08</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide9.PNG" alt="Slide 9"><div class="presentation-slide-num">09</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide10.PNG" alt="Slide 10"><div class="presentation-slide-num">10</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide11.PNG" alt="Slide 11"><div class="presentation-slide-num">11</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide12.PNG" alt="Slide 12"><div class="presentation-slide-num">12</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide13.PNG" alt="Slide 13"><div class="presentation-slide-num">13</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide14.PNG" alt="Slide 14"><div class="presentation-slide-num">14</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide15.PNG" alt="Slide 15"><div class="presentation-slide-num">15</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide16.PNG" alt="Slide 16"><div class="presentation-slide-num">16</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide17.PNG" alt="Slide 17"><div class="presentation-slide-num">17</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide18.PNG" alt="Slide 18"><div class="presentation-slide-num">18</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide19.PNG" alt="Slide 19"><div class="presentation-slide-num">19</div></div>
+          <div class="presentation-slide"><img src="powerpoint pictures/Slide20.PNG" alt="Slide 20"><div class="presentation-slide-num">20</div></div>
+        </div>
         <div class="proj-arrow">↗</div>
       </div>
 
       <div class="proj-card purple-card">
-        <div class="proj-num">06</div>
+        <div class="proj-num">07</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · Branding · Film</span>
         <div class="proj-category">Documentary · Brand Identity · Client</div>
         <div class="proj-title">DJ / Producer — Brand & Documentary</div>
@@ -582,12 +851,12 @@ footer {
           <span class="proj-tag">Editing</span>
           <span class="proj-tag">Branding</span>
         </div>
-        <a class="proj-yt" href="#" target="_blank">Watch on YouTube</a>
+        <a class="proj-yt" href="https://youtu.be/BCQuRxy_-ao?si=HscUUtQTuvP05Tgd" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
         <div class="proj-arrow">↗</div>
       </div>
 
       <div class="proj-card green-card">
-        <div class="proj-num">07</div>
+        <div class="proj-num">08</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · Personal</span>
         <div class="proj-category">Web Design · Cultural Research</div>
         <div class="proj-title">Rap Streetwear — Culture Site</div>
@@ -625,11 +894,174 @@ footer {
   </div>
 </footer>
 
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox-modal">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <div class="lightbox-content">
+    <img class="lightbox-image" id="lightbox-image" src="" alt="Presentation slide">
+  </div>
+  <div class="lightbox-nav">
+    <button id="lightbox-prev">← Previous</button>
+    <span id="lightbox-counter">1 / 20</span>
+    <button id="lightbox-next">Next →</button>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div class="video-modal" id="video-modal">
+  <button class="video-close" id="video-close">&times;</button>
+  <div class="video-content">
+    <video class="video-element" id="video-element" controls>
+      <source src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
 <script>
 const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Presentation toggle
+const presentationToggle = document.getElementById('presentation-toggle');
+const presentationGallery = document.getElementById('presentation-gallery');
+
+presentationToggle.addEventListener('click', () => {
+  presentationGallery.classList.toggle('visible');
+  presentationToggle.textContent = presentationGallery.classList.contains('visible') ? 'Hide Presentation' : 'See Presentation';
+});
+
+// Lightbox functionality
+const lightboxModal = document.getElementById('lightbox-modal');
+const lightboxImage = document.getElementById('lightbox-image');
+const lightboxCounter = document.getElementById('lightbox-counter');
+const lightboxClose = document.getElementById('lightbox-close');
+const lightboxNext = document.getElementById('lightbox-next');
+const lightboxPrev = document.getElementById('lightbox-prev');
+
+let currentSlideIndex = 0;
+let allSlides = [];
+
+// Initialize slides
+function initLightbox() {
+  const slides = document.querySelectorAll('.presentation-slide');
+  allSlides = Array.from(slides).map(slide => ({
+    src: slide.querySelector('img').src,
+    alt: slide.querySelector('img').alt
+  }));
+  
+  slides.forEach((slide, index) => {
+    slide.addEventListener('click', () => openLightbox(index));
+  });
+}
+
+function openLightbox(index) {
+  currentSlideIndex = index;
+  lightboxImage.src = allSlides[currentSlideIndex].src;
+  lightboxImage.alt = allSlides[currentSlideIndex].alt;
+  lightboxModal.classList.add('active');
+  updateLightboxNav();
+}
+
+function closeLightbox() {
+  lightboxModal.classList.remove('active');
+}
+
+function updateLightboxNav() {
+  lightboxCounter.textContent = `${currentSlideIndex + 1} / ${allSlides.length}`;
+  lightboxPrev.disabled = currentSlideIndex === 0;
+  lightboxNext.disabled = currentSlideIndex === allSlides.length - 1;
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+
+lightboxNext.addEventListener('click', () => {
+  if (currentSlideIndex < allSlides.length - 1) {
+    currentSlideIndex++;
+    lightboxImage.src = allSlides[currentSlideIndex].src;
+    updateLightboxNav();
+  }
+});
+
+lightboxPrev.addEventListener('click', () => {
+  if (currentSlideIndex > 0) {
+    currentSlideIndex--;
+    lightboxImage.src = allSlides[currentSlideIndex].src;
+    updateLightboxNav();
+  }
+});
+
+// Close lightbox on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight' && lightboxModal.classList.contains('active')) {
+    if (currentSlideIndex < allSlides.length - 1) {
+      currentSlideIndex++;
+      lightboxImage.src = allSlides[currentSlideIndex].src;
+      updateLightboxNav();
+    }
+  }
+  if (e.key === 'ArrowLeft' && lightboxModal.classList.contains('active')) {
+    if (currentSlideIndex > 0) {
+      currentSlideIndex--;
+      lightboxImage.src = allSlides[currentSlideIndex].src;
+      updateLightboxNav();
+    }
+  }
+});
+
+// Close lightbox when clicking outside
+lightboxModal.addEventListener('click', (e) => {
+  if (e.target === lightboxModal) {
+    closeLightbox();
+  }
+});
+
+// Initialize lightbox when page loads
+initLightbox();
+
+// Video Modal functionality
+const videoModal = document.getElementById('video-modal');
+const videoElement = document.getElementById('video-element');
+const videoClose = document.getElementById('video-close');
+const videoButtons = document.querySelectorAll('.proj-video');
+
+function openVideoModal(videoSrc) {
+  videoElement.src = videoSrc;
+  videoModal.classList.add('active');
+}
+
+function closeVideoModal() {
+  videoModal.classList.remove('active');
+  videoElement.pause();
+  videoElement.currentTime = 0;
+  videoElement.src = '';
+}
+
+videoButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const videoSrc = button.getAttribute('data-video-src');
+    openVideoModal(videoSrc);
+  });
+});
+
+videoClose.addEventListener('click', closeVideoModal);
+
+// Close video modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+    closeVideoModal();
+  }
+});
+
+// Close video modal when clicking outside
+videoModal.addEventListener('click', (e) => {
+  if (e.target === videoModal) {
+    closeVideoModal();
+  }
+});
 </script>
 </body>
 </html>
