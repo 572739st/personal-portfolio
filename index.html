@@ -449,7 +449,6 @@ footer {
   color: var(--accent);
 }
 
-/* Lightbox Modal */
 .lightbox-modal {
   display: none;
   position: fixed;
@@ -535,7 +534,6 @@ footer {
   cursor: not-allowed;
 }
 
-/* Video Modal */
 .video-modal {
   display: none;
   position: fixed;
@@ -894,7 +892,6 @@ footer {
   </div>
 </footer>
 
-<!-- Lightbox Modal -->
 <div class="lightbox-modal" id="lightbox-modal">
   <button class="lightbox-close" id="lightbox-close">&times;</button>
   <div class="lightbox-content">
@@ -907,7 +904,6 @@ footer {
   </div>
 </div>
 
-<!-- Video Modal -->
 <div class="video-modal" id="video-modal">
   <button class="video-close" id="video-close">&times;</button>
   <div class="video-content">
@@ -924,7 +920,6 @@ const obs = new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 
-// Presentation toggle
 const presentationToggle = document.getElementById('presentation-toggle');
 const presentationGallery = document.getElementById('presentation-gallery');
 
@@ -933,7 +928,6 @@ presentationToggle.addEventListener('click', () => {
   presentationToggle.textContent = presentationGallery.classList.contains('visible') ? 'Hide Presentation' : 'See Presentation';
 });
 
-// Lightbox functionality
 const lightboxModal = document.getElementById('lightbox-modal');
 const lightboxImage = document.getElementById('lightbox-image');
 const lightboxCounter = document.getElementById('lightbox-counter');
@@ -944,7 +938,6 @@ const lightboxPrev = document.getElementById('lightbox-prev');
 let currentSlideIndex = 0;
 let allSlides = [];
 
-// Initialize slides
 function initLightbox() {
   const slides = document.querySelectorAll('.presentation-slide');
   allSlides = Array.from(slides).map(slide => ({
@@ -993,7 +986,6 @@ lightboxPrev.addEventListener('click', () => {
   }
 });
 
-// Close lightbox on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowRight' && lightboxModal.classList.contains('active')) {
@@ -1012,17 +1004,13 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Close lightbox when clicking outside
 lightboxModal.addEventListener('click', (e) => {
   if (e.target === lightboxModal) {
     closeLightbox();
   }
 });
 
-// Initialize lightbox when page loads
 initLightbox();
-
-// Video Modal functionality
 const videoModal = document.getElementById('video-modal');
 const videoElement = document.getElementById('video-element');
 const videoClose = document.getElementById('video-close');
@@ -1049,14 +1037,11 @@ videoButtons.forEach(button => {
 
 videoClose.addEventListener('click', closeVideoModal);
 
-// Close video modal on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && videoModal.classList.contains('active')) {
     closeVideoModal();
   }
 });
-
-// Close video modal when clicking outside
 videoModal.addEventListener('click', (e) => {
   if (e.target === videoModal) {
     closeVideoModal();
