@@ -232,7 +232,10 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 
 .cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; }
-.cards-grid.two-col { grid-template-columns: repeat(2,1fr); }
+.cards-grid.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: center; margin: 0 auto; max-width: 1160px; justify-items: center; }
+.cards-grid.two-col.center-single { grid-template-columns: minmax(0, 560px); }
+.cards-grid.two-col.center-single > .proj-card { min-height: 32rem; width: 100%; }
+.cards-grid.s1-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: center; margin: 0 auto; }
 
 .proj-card {
   background: #0f0f0f; padding: 2.2rem;
@@ -246,7 +249,7 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 .proj-card.accent-card { background: rgba(199,161,90,0.08); border: 1px solid rgba(199,161,90,0.12); }
 .proj-card.accent-card:hover { background: rgba(199,161,90,0.12); }
 
-.proj-card.green-card, .proj-card.accent-card { display: none !important; }
+.proj-card.accent-card { display: none !important; }
 .proj-card.blue-card { background: #192640; }
 .proj-card.blue-card:hover { background: #1f3050; }
 .proj-card.purple-card { background: #1e1530; }
@@ -271,18 +274,17 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 
 .proj-category {
   font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(247,244,239,0.35); margin-bottom: 0.5rem;
+  color: rgba(247,244,239,0.35); margin-bottom: 0.35rem;
 }
 .proj-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem; font-weight: 700;
-  color: var(--paper); line-height: 1.25; margin-bottom: 0.85rem;
-  flex: 1;
+  color: var(--ink); line-height: 1.25; margin-bottom: 0.4rem;
 }
 .proj-card.wide .proj-title { font-size: 1.75rem; }
 .proj-desc {
   font-size: 0.84rem; line-height: 1.7;
-  color: rgba(247,244,239,0.5); margin-bottom: 1.5rem;
+  color: rgba(247,244,239,0.5); margin-bottom: 0.9rem;
 }
 .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .proj-tag {
@@ -303,6 +305,47 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   letter-spacing: 0.1em; text-transform: uppercase;
   color: #ff6b6b; margin-top: 0.75rem; text-decoration: none;
 }
+.proj-thumb-wrap {
+  position: relative;
+  margin: 0.8rem 0;
+}
+.proj-thumb {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.proj-thumb-button {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ff6b6b;
+  text-decoration: none;
+  background: rgba(11,11,11,0.85);
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+}
+.proj-thumb-button:hover {
+  background: rgba(11,11,11,0.98);
+}
+.proj-thumb-button.proj-video,
+.proj-yt.proj-thumb-button {
+  background: rgba(11,11,11,0.85);
+  color: #ff6b6b;
+}
+.proj-thumb-button.proj-video:hover,
+.proj-yt.proj-thumb-button:hover {
+  background: rgba(11,11,11,0.98);
+}
 .proj-yt::before { content: '▶'; font-size: 0.7rem; }
 .proj-file {
   display: inline-flex; align-items: center; gap: 0.45rem;
@@ -318,6 +361,15 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   color: #4ecdc4; margin-top: 0.75rem; text-decoration: none;
 }
 .proj-game::before { content: '▶'; font-size: 0.7rem; }
+.proj-thumb-button.proj-game,
+.proj-game.proj-thumb-button {
+  background: rgba(11,11,11,0.85);
+  color: #4ecdc4;
+}
+.proj-thumb-button.proj-game:hover,
+.proj-game.proj-thumb-button:hover {
+  background: rgba(11,11,11,0.98);
+}
 .proj-presentation {
   display: inline-flex; align-items: center; gap: 0.45rem;
   font-family: 'DM Mono', monospace; font-size: 0.65rem;
@@ -329,6 +381,19 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 .proj-presentation::before { content: '▶'; font-size: 0.7rem; }
 .proj-presentation:hover { color: var(--accent-deep); }
+.proj-presentation.proj-thumb-button {
+  background: rgba(11,11,11,0.85);
+  color: var(--accent);
+  padding: 0.75rem 0.95rem;
+  margin-top: 0;
+  bottom: 1rem;
+  left: 1rem;
+  transform: none;
+}
+.proj-presentation.proj-thumb-button:hover {
+  background: rgba(11,11,11,0.98);
+  color: var(--accent-deep);
+}
 .proj-video {
   display: inline-flex; align-items: center; gap: 0.45rem;
   font-family: 'DM Mono', monospace; font-size: 0.65rem;
@@ -340,6 +405,14 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 .proj-video::before { content: '▶'; font-size: 0.7rem; }
 .proj-video:hover { color: #ff5252; }
+button.proj-thumb-button.proj-video {
+  background: rgba(11,11,11,0.85);
+  color: #ff6b6b;
+  padding: 0.85rem 1rem;
+}
+button.proj-thumb-button.proj-video:hover {
+  background: rgba(11,11,11,0.98);
+}
 
 footer {
   background: var(--paper);
@@ -584,7 +657,6 @@ footer {
 .video-close:hover {
   color: var(--ink);
 }
-
 @media (max-width: 960px) {
   nav { padding: 0 1.5rem; }
   .nav-links { gap: 1.5rem; }
@@ -600,6 +672,25 @@ footer {
   .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
   .footer-bottom { grid-column: span 1; flex-direction: column; gap: 0.75rem; }
   .hero-scroll { left: 2rem; }
+}
+.web-wrap {
+  position: relative;
+}
+
+.web-wrap .web-btn {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;  
+  left: auto;
+  transform: none;
+  margin: 0;
+  background: rgba(11,11,11,0.85);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.web-wrap .web-btn:hover {
+  background: rgba(11,11,11,0.98);
 }
 </style>
 </head>
@@ -640,17 +731,15 @@ footer {
     <div class="fade-up">
       <h2 class="section-title">Designer &<br><em>Developer</em></h2>
       <div class="about-tags">
+        <span class="skill-tag">HTML / CSS</span>
         <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Branding</span>
+        <span class="skill-tag">Filmmaking</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Adobe</span>
         <span class="skill-tag">Flutter</span>
         <span class="skill-tag">Python</span>
-        <span class="skill-tag">HTML / CSS</span>
-        <span class="skill-tag">UI/UX</span>
-        <span class="skill-tag">Branding</span>
-        <span class="skill-tag">Motion</span>
-        <span class="skill-tag">Figma</span>
-        <span class="skill-tag">Adobe </span>
-        <span class="skill-tag">Film / Docs</span>
-        <span class="skill-tag">Content Strategy</span>
+        <span class="skill-tag">Real Client Work</span>
       </div>
       <div class="stat-row">
         <div>
@@ -658,7 +747,7 @@ footer {
           <div class="stat-label">Semesters</div>
         </div>
         <div>
-          <div class="stat-number">7</div>
+          <div class="stat-number">8</div>
           <div class="stat-label">Projects</div>
         </div>
         <div>
@@ -686,123 +775,61 @@ footer {
 
 <section class="projects-section" id="projects">
   <div class="section-label">All work</div>
-  <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Seven Projects</em></h2>
+  <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Eight Projects</em></h2>
   <p class="projects-intro">Every project I made — real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
-
-  <div class="semester-heading">
-    <div class="sem-divider"></div>
-  </div>
-  <div class="semester-block fade-up">
-      <div class="sem-header">
-      <span class="sem-pill s1">Semester 1</span>
-      <span class="sem-count">5 projects</span>
-    </div>
-    <div class="cards-grid">
-
-      <div class="proj-card blue-card">
-        <div class="proj-num">01</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Game Dev</span>
-        <div class="proj-category">JavaScript · Canvas</div>
-        <div class="proj-title">Super Mario — Browser Game</div>
-        <p class="proj-desc">A fully playable Mario-style platformer built from scratch in vanilla JavaScript. Custom collision detection, sprite animation, level design — no frameworks, no shortcuts.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Canvas API</span>
-          <span class="proj-tag">Game Logic</span>
-          <span class="proj-tag">Sprite Animation</span>
-        </div>
-        <a class="proj-game" href="mario game latest version/mario game/mario.html" target="_blank" rel="noopener noreferrer">Play Game</a>
-        <div class="proj-arrow">↗</div>
-      </div>
-
-      <div class="proj-card blue-card">
-        <div class="proj-num">02</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Mobile</span>
-        <div class="proj-category">Flutter · Android Studio</div>
-        <div class="proj-title">PTSO — Clothing App</div>
-        <p class="proj-desc">A cross-platform clothing app built with Flutter in Android Studio. Designed the UI, built the product browsing and cart flows, and handled the full development cycle end-to-end.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Flutter</span>
-          <span class="proj-tag">Dart</span>
-          <span class="proj-tag">Android Studio</span>
-          <span class="proj-tag">UI Design</span>
-          <span class="proj-tag">Mobile</span>
-        </div>
-        <button class="proj-video" id="ptso-video-btn" data-video-src="ptso video.mp4">Watch Video</button>
-        <div class="proj-arrow">↗</div>
-      </div>
-
-      <div class="proj-card blue-card">
-        <div class="proj-num">03</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Web Dev</span>
-        <div class="proj-category">Python · HTML · CSS · JS</div>
-        <div class="proj-title">Messaging Web App</div>
-        <p class="proj-desc">A real-time texting webapp with a Python backend and a custom HTML/CSS/JS frontend. User auth, live message threads, and a clean UI — my first full-stack build.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Python</span>
-          <span class="proj-tag">Flask</span>
-          <span class="proj-tag">HTML/CSS</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Full-stack</span>
-        </div>
-        <button class="proj-video" id="cryptext-video-btn" data-video-src="crypText screen recording 22 mei.mp4">Watch Video</button>
-        <div class="proj-arrow">↗</div>
-      </div>
-
-      <div class="proj-card accent-card wide">
-        <div class="proj-num">04</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Web Design</span>
-        <div class="proj-category">HTML · CSS · JavaScript</div>
-        <div class="proj-title">Travel Guide — UI Showcase</div>
-        <p class="proj-desc">A polished travel guide webapp with rich UI detail — custom layouts, smooth interactions, animated components. This was the project where design and code finally clicked for me. Built purely with HTML, CSS and JavaScript, no frameworks.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">HTML</span>
-          <span class="proj-tag">CSS</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">UI Design</span>
-          <span class="proj-tag">Animations</span>
-          <span class="proj-tag">Responsive</span>
-        </div>
-        <div class="proj-arrow">↗</div>
-      </div>
-
-      <div class="proj-card blue-card">
-        <div class="proj-num">05</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Travel · UX</span>
-        <div class="proj-category">HTML · CSS · JavaScript</div>
-        <div class="proj-title">Arivana — Travel Guide</div>
-        <p class="proj-desc">A travel web app for sustainable and affordable journeys with a premium VIP experience. The challenge was balancing functionality with a visually rich, accessible interface while keeping the product practical and well-organized.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">HTML</span>
-          <span class="proj-tag">CSS</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">UX</span>
-          <span class="proj-tag">Travel</span>
-          <span class="proj-tag">AI</span>
-        </div>
-        <button class="proj-video" id="arivana-video-btn" data-video-src="Arivana screen recording.mp4">Watch Video</button>
-        <div class="proj-arrow">↗</div>
-      </div>
-
-    </div>
-  </div>
 
   <div class="semester-heading">
     <div class="sem-divider"></div>
   </div>
   <div class="semester-block fade-up delay-1">
     <div class="sem-header">
+      <span class="sem-pill s3">Semester 3</span>
+      <span class="sem-count">1 project</span>
+    </div>
+    <div class="cards-grid two-col center-single">
+
+      <div class="proj-card green-card">
+        <div class="proj-num">05</div>
+        <span class="proj-sem-tag s3-tag">Semester 3 · Film · Trailer</span>
+        <div class="proj-category">Video Production · Editing</div>
+        <div class="proj-title">Album Trailer OV 09</div>
+        <p class="proj-desc">A cinematic album trailer for OV 09, built with motion design, pacing, and audio-driven storytelling to showcase the project’s visual identity.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Filmmaking</span>
+           <span class="proj-tag">Cinematography</span>
+          <span class="proj-tag">Editing</span>
+          <span class="proj-tag">Adobe</span>
+          <span class="proj-tag">Real Client Work</span>
+        </div>
+        <div class="proj-thumb-wrap">
+<img class="proj-thumb ov09-thumb" src="ov09 pic.png" alt="OV 09 album trailer thumbnail">          <button class="proj-yt proj-thumb-button proj-video" data-video-src="album trailer.mp4">Watch Trailer</button>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="semester-heading">
+    <div class="sem-divider"></div>
+  </div>
+  <div class="semester-block fade-up">
+    <div class="sem-header">
       <span class="sem-pill s2">Semester 2</span>
       <span class="sem-count">3 projects</span>
     </div>
     <div class="cards-grid">
 
-      <div class="proj-card purple-card wide">
-        <div class="proj-num">06</div>
+      <div class="proj-card purple-card">
+        <div class="proj-num">05</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · UX · Client</span>
         <div class="proj-category">UX Research · UI Design · Group Project</div>
         <div class="proj-title">CZ Zorgvinder — UX Improvement</div>
-        <p class="proj-desc">A real client project with CZ, one of the Netherlands' largest health insurers. Our team audited and redesigned the Zorgvinder platform — improving information architecture, user flows, and interface clarity. Deep UX research: user interviews, usability testing, heuristic evaluation, wireframes, and a refined UI layer on top.</p>
+        <p class="proj-desc">Redesigned the Zorgvinder platform for a major Dutch health insurer, improving information architecture, user flows, and interface clarity through focused UX research and UI work.</p>
+        <div class="proj-thumb-wrap">
+          <img class="proj-thumb" src="CZ Zorgvinder Homepage.png" alt="CZ Zorgvinder homepage">
+          <button class="proj-presentation proj-thumb-button" id="presentation-toggle">See Presentation</button>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">UX Research</span>
           <span class="proj-tag">User Testing</span>
@@ -810,8 +837,8 @@ footer {
           <span class="proj-tag">UI Design</span>
           <span class="proj-tag">Figma</span>
           <span class="proj-tag">Healthcare</span>
+          <span class="proj-tag">Real Client Work</span>
         </div>
-        <button class="proj-presentation" id="presentation-toggle">See Presentation</button>
         <div class="presentation-gallery" id="presentation-gallery">
           <div class="presentation-slide"><img src="powerpoint pictures/Slide1.PNG" alt="Slide 1"><div class="presentation-slide-num">01</div></div>
           <div class="presentation-slide"><img src="powerpoint pictures/Slide2.PNG" alt="Slide 2"><div class="presentation-slide-num">02</div></div>
@@ -838,33 +865,151 @@ footer {
       </div>
 
       <div class="proj-card purple-card">
-        <div class="proj-num">07</div>
+        <div class="proj-num">06</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · Branding · Film</span>
         <div class="proj-category">Documentary · Brand Identity · Client</div>
         <div class="proj-title">DJ / Producer — Brand & Documentary</div>
         <p class="proj-desc">Our client was a DJ and producer with zero existing branding. Our team built his entire visual identity. My personal contribution: I made a documentary about him — filmed, directed, and edited. It's live on YouTube.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Documentary</span>
-          <span class="proj-tag">Videography</span>
-          <span class="proj-tag">Editing</span>
-          <span class="proj-tag">Branding</span>
+        <div class="proj-thumb-wrap">
+          <img class="proj-thumb" src="thumbnail dp.jpg" alt="Documentary thumbnail">
+          <a class="proj-yt proj-thumb-button" href="https://youtu.be/BCQuRxy_-ao?si=HscUUtQTuvP05Tgd">Watch on YouTube</a>
         </div>
-        <a class="proj-yt" href="https://youtu.be/BCQuRxy_-ao?si=HscUUtQTuvP05Tgd" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+        <div class="proj-tags">
+          <span class="proj-tag">Branding</span>
+          <span class="proj-tag">Filmmaking</span>
+          <span class="proj-tag">Documentary</span>
+          <span class="proj-tag">Editing</span>
+          <span class="proj-tag">Adobe</span>
+          <span class="proj-tag">Real Client Work</span>
+        </div>
         <div class="proj-arrow">↗</div>
       </div>
 
-      <div class="proj-card green-card">
-        <div class="proj-num">08</div>
+      <div class="proj-card purple-card">
+        <div class="proj-num">07</div>
         <span class="proj-sem-tag s2-tag">Semester 2 · Personal</span>
         <div class="proj-category">Web Design · Cultural Research</div>
-        <div class="proj-title">Rap Streetwear — Culture Site</div>
-        <p class="proj-desc">My personal project: a stunning editorial website exploring the intersection of rap music and streetwear — rappers, their brands, and their cultural influence. Heavily designed, content-rich, and fully mine.</p>
+        <div class="proj-title">Rap Streetwear Deep-Dive</div>
+        <p class="proj-desc">An interactive editorial site exploring rap music and streetwear culture through bold branding, immersive UI, and cultural storytelling.</p>
         <div class="proj-tags">
           <span class="proj-tag">HTML/CSS</span>
           <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Editorial Design</span>
+          <span class="proj-tag">Branding</span>
           <span class="proj-tag">Culture</span>
-          <span class="proj-tag">Research</span>
+        </div>
+      <div class="proj-thumb-wrap web-wrap">
+  <img class="proj-thumb" src="interactive%20website%20pic.png" alt="Interactive website screenshot">
+
+  <a class="proj-yt proj-thumb-button web-btn"
+     href="interactive website/index.html">
+    See Website
+  </a>
+</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="semester-heading">
+    <div class="sem-divider"></div>
+  </div>
+  <div class="semester-block fade-up">
+      <div class="sem-header">
+      <span class="sem-pill s1">Semester 1</span>
+      <span class="sem-count">4 projects</span>
+    </div>
+    <div class="cards-grid s1-grid">
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">01</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Game Dev</span>
+        <div class="proj-category">JavaScript</div>
+        <div class="proj-title">Super Mario — Browser Game</div>
+        <p class="proj-desc">A fully playable Mario-style platformer built from scratch in vanilla JavaScript. Custom collision detection, level design — no frameworks, no shortcuts.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Game Logic</span>
+        </div>
+        <div class="proj-thumb-wrap">
+          <img class="proj-thumb" src="mario game pic.png" alt="Super Mario browser game screenshot">
+          <a class="proj-game proj-thumb-button" href="mario game latest version/mario game/mario.html">Play Game</a>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">02</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Mobile</span>
+        <div class="proj-category">Flutter · Android Studio</div>
+        <div class="proj-title">PTSO — Clothing App</div>
+        <p class="proj-desc">A cross-platform clothing app built with Flutter in Android Studio. Designed the UI, built the product browsing and cart flows, and handled the full development cycle end-to-end.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Flutter</span>
+          <span class="proj-tag">Dart</span>
+          <span class="proj-tag">Android Studio</span>
+          <span class="proj-tag">Mobile</span>
+        </div>
+        <div class="proj-thumb-wrap">
+  <img class="proj-thumb ptso-thumb" src="ptso pic.png" alt="PTSO app screenshot">
+
+  <button class="proj-yt proj-thumb-button proj-video"
+    data-video-src="ptso video.mp4">
+    Watch Video
+  </button>
+</div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">03</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Web Dev</span>
+        <div class="proj-category">Python · HTML · CSS · JS</div>
+        <div class="proj-title">Messaging Web App</div>
+        <p class="proj-desc">A real-time texting webapp with a Python backend and a custom HTML/CSS/JS frontend. User auth, live message threads, and a clean UI — my first full-stack build.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Full-stack</span>
+        </div>
+        <div class="proj-thumb-wrap">
+          <img class="proj-thumb" src="cryptext pic.png" alt="Cryptext web app screenshot">
+          <button class="proj-yt proj-thumb-button proj-video" id="cryptext-video-btn" data-video-src="crypText screen recording 22 mei.mp4">Watch Video</button>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card accent-card">
+        <div class="proj-num">04</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Web Design</span>
+        <div class="proj-category">HTML · CSS · JavaScript</div>
+        <div class="proj-title">Travel Guide — UI Showcase</div>
+        <p class="proj-desc">A polished travel guide webapp with rich UI detail — custom layouts, smooth interactions, animated components. This was the project where design and code finally clicked for me. Built purely with HTML, CSS and JavaScript, no frameworks.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Animations</span>
+          <span class="proj-tag">Responsive</span>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card blue-card">
+        <div class="proj-num">04</div>
+        <span class="proj-sem-tag s1-tag">Semester 1 · Travel · UX</span>
+        <div class="proj-category">HTML · CSS · JavaScript</div>
+        <div class="proj-title">Arivana — Travel Guide</div>
+        <p class="proj-desc">A travel web app for sustainable and affordable journeys with a premium VIP experience. The challenge was balancing functionality with a visually rich, accessible interface while keeping the product practical and well-organized.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">Travel</span>
+        </div>
+        <div class="proj-thumb-wrap">
+          <img class="proj-thumb" src="arivana pic.png" alt="Arivana travel guide screenshot">
+          <button class="proj-yt proj-thumb-button proj-video" id="arivana-video-btn" data-video-src="Arivana screen recording.mp4">Watch Video</button>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -915,6 +1060,56 @@ footer {
 </div>
 
 <script>
+
+const skillTags = document.querySelectorAll('.skill-tag');
+const projects = document.querySelectorAll('.proj-card');
+
+let activeTag = null;
+
+function normalize(text) {
+  return text.trim().toLowerCase();
+}
+
+function projectHasTag(project, tag) {
+  const tags = project.querySelectorAll('.proj-tag');
+  return Array.from(tags).some(t => normalize(t.textContent) === tag);
+}
+
+function clearFilter() {
+  projects.forEach(p => {
+    p.style.opacity = '1';
+    p.style.filter = 'none';
+  });
+  activeTag = null;
+}
+
+function applyFilter(tag) {
+  projects.forEach(project => {
+    const match = projectHasTag(project, tag);
+
+    if (match) {
+      project.style.opacity = '1';
+      project.style.filter = 'none';
+      project.style.transform = 'scale(1)';
+    } else {
+      project.style.opacity = '0.25';
+      project.style.filter = 'grayscale(1)';
+    }
+  });
+}
+skillTags.forEach(tagEl => {
+  tagEl.addEventListener('click', () => {
+    const tag = normalize(tagEl.textContent);
+
+    if (activeTag === tag) {
+      clearFilter();
+      return;
+    }
+
+    activeTag = tag;
+    applyFilter(tag);
+  });
+});
 const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.1});
@@ -1029,7 +1224,8 @@ function closeVideoModal() {
 }
 
 videoButtons.forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
     const videoSrc = button.getAttribute('data-video-src');
     openVideoModal(videoSrc);
   });
