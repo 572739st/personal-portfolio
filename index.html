@@ -56,7 +56,7 @@ nav {
 .nav-links a:hover { color: var(--accent-deep); }
 .hero {
   min-height: 100vh;
-  display: grid; grid-template-columns: 1fr;
+  display: grid; grid-template-columns: 1.15fr 1fr;
   position: relative; overflow: hidden;
 }
 .hero-left {
@@ -105,6 +105,33 @@ h1.hero-name em { font-style: italic; color: var(--accent-deep); }
 }
 .btn-ghost:hover { color: var(--accent-deep); }
  .btn-ghost { cursor: pointer; }
+.hero-right {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.hero-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    var(--paper) 0%,
+    rgba(11,11,11,0.92) 10%,
+    rgba(11,11,11,0.55) 32%,
+    rgba(11,11,11,0.12) 60%,
+    rgba(11,11,11,0) 85%);
+  z-index: 2;
+  pointer-events: none;
+}
 .hero-scroll {
   position: absolute; bottom: 2.5rem; left: 6rem;
   display: flex; align-items: center; gap: 0.75rem;
@@ -161,6 +188,18 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 .skill-tag:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
  .skill-tag { cursor: pointer; }
+.skill-tag.active {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.skill-hint {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  margin-top: 1.25rem;
+  margin-bottom: 0.9rem;
+}
 .stat-row {
   display: flex; gap: 3rem; margin-top: 2.5rem;
   padding-top: 2.5rem; border-top: 1px solid var(--paper-warm);
@@ -236,6 +275,16 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 .cards-grid.two-col.center-single { grid-template-columns: minmax(0, 560px); }
 .cards-grid.two-col.center-single > .proj-card { min-height: 32rem; width: 100%; }
 .cards-grid.s1-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: center; margin: 0 auto; }
+.cards-grid.s1-grid .proj-thumb-wrap {
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+.cards-grid.s1-grid .proj-thumb {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center;
+}
 
 .proj-card {
   background: #0f0f0f; padding: 2.2rem;
@@ -286,6 +335,49 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   font-size: 0.84rem; line-height: 1.7;
   color: rgba(247,244,239,0.5); margin-bottom: 0.9rem;
 }
+.proj-readmore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.proj-readmore-btn:hover { color: var(--accent-deep); }
+.proj-readmore-btn::after {
+  content: '+';
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+.proj-readmore-btn.is-open::after { transform: rotate(45deg); }
+.proj-readmore-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-bottom 0.3s ease;
+  margin-bottom: 0;
+}
+.proj-readmore-content.is-open {
+  max-height: 600px;
+  opacity: 1;
+  margin-bottom: 0.9rem;
+}
+.proj-readmore-content p {
+  font-size: 0.84rem;
+  line-height: 1.7;
+  color: rgba(247,244,239,0.5);
+  margin-bottom: 0.6rem;
+}
+.proj-readmore-content p:last-child { margin-bottom: 0; }
 .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .proj-tag {
   font-family: 'DM Mono', monospace;
@@ -712,12 +804,17 @@ footer {
       Dean.<br>Azghari.<br>
     </h1>
     <p class="hero-desc">
-      A portfolio spanning three semesters — from JavaScript games and Flutter apps to brand identities, documentaries, and streetwear culture sites. This is everything I've made, and who I'm becoming.
+      A portfolio spanning three semesters — from JavaScript creations, Flutter apps to brand identities to professional videos. This is everything I've made, and who I'm becoming.
     </p>
     <div class="hero-ctas">
       <a href="#projects" class="btn-primary">See All Projects</a>
       <a href="#about" class="btn-ghost">About Me</a>
     </div>
+  </div>
+  <div class="hero-right">
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+      <source src="DP short doc ad.mp4" type="video/mp4">
+    </video>
   </div>
     <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -730,6 +827,7 @@ footer {
   <div class="about-grid">
     <div class="fade-up">
       <h2 class="section-title">Designer &<br><em>Developer</em></h2>
+      <p class="skill-hint">Click a skill to filter the projects relevant to it:</p>
       <div class="about-tags">
         <span class="skill-tag">HTML / CSS</span>
         <span class="skill-tag">JavaScript</span>
@@ -758,13 +856,13 @@ footer {
     </div>
     <div class="about-text fade-up delay-1">
       <p>
-        I'm a <strong>creative at Fontys ICT</strong> who codes, designs, films, and brands. My work doesn't sit neatly in one box — I've built games in JavaScript, mobile apps in Flutter, full-stack webapps in Python, and brand identities from scratch.
+        I'm a <strong>creative at Fontys ICT</strong> who codes, designs, films, and brands. My work doesn't sit neatly in one box — I've built stunning websites in JavaScript, a mobile app in Flutter, filmed videos for real clients, and created brand identities from scratch.
       </p>
       <div class="about-pull">
         "Show, don't tell — I let the work speak."
       </div>
       <p>
-        Over three semesters I've worked with real clients — a <strong>DJ/producer with zero branding</strong>, a healthcare platform (<strong>CZ Zorgvinder</strong>). I've also made things purely because I was immersed in it: a <strong>rap streetwear deep-dive</strong>, a travel guide webapp.
+        Over three semesters I've worked with real clients — a <strong>rapper</strong> who needed an album trailer for his album release, a <strong>DJ/producer</strong> with zero branding, and the <strong>CZ Zorgvinder healthcare platform </strong>. I've also made things purely because I was immersed in it: a stunning icon archive, a travel guide webapp and much more.
       </p>
       <p>
         This portfolio is an honest record of my journey.
@@ -776,7 +874,7 @@ footer {
 <section class="projects-section" id="projects">
   <div class="section-label">All work</div>
   <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Eight Projects</em></h2>
-  <p class="projects-intro">Every project I made — real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
+  <p class="projects-intro">Every project I made: real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
 
   <div class="semester-heading">
     <div class="sem-divider"></div>
@@ -793,7 +891,13 @@ footer {
         <span class="proj-sem-tag s3-tag">Semester 3 · Film · Trailer</span>
         <div class="proj-category">Video Production · Editing</div>
         <div class="proj-title">Album Trailer OV 09</div>
-        <p class="proj-desc">A cinematic album trailer for OV 09, built with motion design, pacing, and audio-driven storytelling to showcase the project’s visual identity.</p>
+        <p class="proj-desc">A cinematic album trailer for OV 09, built with visual effects, pacing, and audio-driven storytelling to showcase the project’s visual identity.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This project is an album trailer created to promote Young Vlogga’s upcoming album OV 09. The concept is deeply personal and cinematic, focusing on a traumatic childhood experience that shaped who he is today. Instead of a standard promotional video, the goal was to create an emotional narrative that connects the audience to the artist on a human level.</p>
+          <p>The trailer recreates a real-life event from when he was around 10 years old, involving a violent home robbery on Christmas Day. This moment became a defining point in his life and heavily influenced his identity and artistic direction.</p>
+          <p>My role in this project included directing, script development, producing, camera operation, sound design, and video editing. The main challenge was translating a sensitive real-life memory into a cinematic story while maintaining realism, emotional depth, and respect for the subject matter.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">Filmmaking</span>
            <span class="proj-tag">Cinematography</span>
@@ -826,6 +930,12 @@ footer {
         <div class="proj-category">UX Research · UI Design · Group Project</div>
         <div class="proj-title">CZ Zorgvinder — UX Improvement</div>
         <p class="proj-desc">Redesigned the Zorgvinder platform for a major Dutch health insurer, improving information architecture, user flows, and interface clarity through focused UX research and UI work.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This project focused on improving CZ Zorgvinder’s digital platform through UX research, interface design, and front-end implementation. My team and I collected user data, analyzed pain points, and translated findings into a functional prototype.</p>
+          <p>My role was conducting user research, analyzing data, contributing to Figma design decisions, and converting the final designs into code. A major focus was improving clarity in user flows and making the platform more intuitive.</p>
+          <p>The challenge was balancing stakeholder requirements, user needs, and technical feasibility while maintaining a clean and accessible interface.</p>
+        </div>
         <div class="proj-thumb-wrap">
           <img class="proj-thumb" src="CZ Zorgvinder Homepage.png" alt="CZ Zorgvinder homepage">
           <button class="proj-presentation proj-thumb-button" id="presentation-toggle">See Presentation</button>
@@ -870,6 +980,12 @@ footer {
         <div class="proj-category">Documentary · Brand Identity · Client</div>
         <div class="proj-title">DJ / Producer — Brand & Documentary</div>
         <p class="proj-desc">Our client was a DJ and producer with zero existing branding. Our team built his entire visual identity. My personal contribution: I made a documentary about him — filmed, directed, and edited. It's live on YouTube.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This project focused on developing the branding for Digital Paradise through research, visual exploration, and identity design.</p>
+          <p>My main responsibility was translating research into visual design decisions in Figma and creating the documentary. I was responsible for the entire production of the documentary, with only one teammate assisting in filming.</p>
+          <p>The goal was to turn abstract brand values into a consistent visual identity while maintaining alignment with the client’s vision throughout the process.</p>
+        </div>
         <div class="proj-thumb-wrap">
           <img class="proj-thumb" src="thumbnail dp.jpg" alt="Documentary thumbnail">
           <a class="proj-yt proj-thumb-button" href="https://youtu.be/BCQuRxy_-ao?si=HscUUtQTuvP05Tgd">Watch on YouTube</a>
@@ -891,6 +1007,12 @@ footer {
         <div class="proj-category">Web Design · Cultural Research</div>
         <div class="proj-title">Rap Streetwear Deep-Dive</div>
         <p class="proj-desc">An interactive editorial site exploring rap music and streetwear culture through bold branding, immersive UI, and cultural storytelling.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This project is an interactive web experience exploring rap music and streetwear culture through design and storytelling.</p>
+          <p>I worked on HTML, CSS, JavaScript development, and cultural research, building an immersive UI experience focused on branding and visual storytelling.</p>
+          <p>The goal was to combine culture and design into a cohesive interactive and stunning experience.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">HTML/CSS</span>
           <span class="proj-tag">JavaScript</span>
@@ -927,6 +1049,12 @@ footer {
         <div class="proj-category">JavaScript</div>
         <div class="proj-title">Super Mario — Browser Game</div>
         <p class="proj-desc">A fully playable Mario-style platformer built from scratch in vanilla JavaScript. Custom collision detection, level design — no frameworks, no shortcuts.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This is a fully playable Mario-style platformer built using vanilla JavaScript with no frameworks. It includes custom collision detection, level design, and game logic.</p>
+          <p>I was responsible for everything: design, development, mechanics, and debugging.</p>
+          <p>The main challenge was understanding and implementing game physics and logic without prior experience in game development.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">HTML/CSS</span>
           <span class="proj-tag">JavaScript</span>
@@ -945,6 +1073,12 @@ footer {
         <div class="proj-category">Flutter · Android Studio</div>
         <div class="proj-title">PTSO — Clothing App</div>
         <p class="proj-desc">A cross-platform clothing app built with Flutter in Android Studio. Designed the UI, built the product browsing and cart flows, and handled the full development cycle end-to-end.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>This is a cross-platform clothing app built using Flutter in Android Studio. It includes product browsing, UI design, and basic shopping flow functionality.</p>
+          <p>I was responsible for the full project: concept, design, development, and testing.</p>
+          <p>The main challenge was building a complete mobile app from scratch while learning Flutter and ensuring the UI remained clean and usable.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">Flutter</span>
           <span class="proj-tag">Dart</span>
@@ -968,6 +1102,12 @@ footer {
         <div class="proj-category">Python · HTML · CSS · JS</div>
         <div class="proj-title">Messaging Web App</div>
         <p class="proj-desc">A real-time texting webapp with a Python backend and a custom HTML/CSS/JS frontend. User auth, live message threads, and a clean UI — my first full-stack build.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>CrypText is a secure messaging web application built in a small team over five weeks. It focuses on privacy-first communication without traditional login systems or stored user data.</p>
+          <p>My contribution was the same as Arivana: full design and front-end development using HTML, CSS, and JavaScript, supported by backend integration in collaboration with the team.</p>
+          <p>The biggest challenge was balancing usability with strong security principles, including implementing a recovery phrase login system.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">HTML/CSS</span>
           <span class="proj-tag">JavaScript</span>
@@ -981,27 +1121,18 @@ footer {
         <div class="proj-arrow">↗</div>
       </div>
 
-      <div class="proj-card accent-card">
-        <div class="proj-num">04</div>
-        <span class="proj-sem-tag s1-tag">Semester 1 · Web Design</span>
-        <div class="proj-category">HTML · CSS · JavaScript</div>
-        <div class="proj-title">Travel Guide — UI Showcase</div>
-        <p class="proj-desc">A polished travel guide webapp with rich UI detail — custom layouts, smooth interactions, animated components. This was the project where design and code finally clicked for me. Built purely with HTML, CSS and JavaScript, no frameworks.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">HTML/CSS</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Animations</span>
-          <span class="proj-tag">Responsive</span>
-        </div>
-        <div class="proj-arrow">↗</div>
-      </div>
-
       <div class="proj-card blue-card">
         <div class="proj-num">04</div>
         <span class="proj-sem-tag s1-tag">Semester 1 · Travel · UX</span>
         <div class="proj-category">HTML · CSS · JavaScript</div>
         <div class="proj-title">Arivana — Travel Guide</div>
         <p class="proj-desc">A travel web app for sustainable and affordable journeys with a premium VIP experience. The challenge was balancing functionality with a visually rich, accessible interface while keeping the product practical and well-organized.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>Arivana is a travel web application designed to help users find sustainable and affordable travel options in a clean and accessible way. The goal was to combine usability with a premium, visually rich experience.</p>
+          <p>My responsibilities included UI/UX design, full front-end development using HTML, CSS, and JavaScript, and shaping the overall user experience.</p>
+          <p>The main challenge was balancing functionality with visual design while keeping the interface intuitive and organized for users with different travel needs.</p>
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">HTML/CSS</span>
           <span class="proj-tag">JavaScript</span>
@@ -1023,7 +1154,7 @@ footer {
   <div class="footer-grid">
     <div>
       <div class="footer-heading">Let's<br><em>Connect</em></div>
-      <p class="footer-sub">This portfolio grows every semester. If you're a teacher, collaborator, or just curious — reach out.</p>
+      <p class="footer-sub">This portfolio grows every semester. If you're an employer, collaborator, or just curious - reach out.</p>
     </div>
     <div style="display:flex;flex-direction:column;justify-content:flex-end;">
       <ul class="footer-links">
@@ -1065,6 +1196,7 @@ const skillTags = document.querySelectorAll('.skill-tag');
 const projects = document.querySelectorAll('.proj-card');
 
 let activeTag = null;
+let activeTagEl = null;
 
 function normalize(text) {
   return text.trim().toLowerCase();
@@ -1080,7 +1212,9 @@ function clearFilter() {
     p.style.opacity = '1';
     p.style.filter = 'none';
   });
+  if (activeTagEl) activeTagEl.classList.remove('active');
   activeTag = null;
+  activeTagEl = null;
 }
 
 function applyFilter(tag) {
@@ -1106,7 +1240,10 @@ skillTags.forEach(tagEl => {
       return;
     }
 
+    if (activeTagEl) activeTagEl.classList.remove('active');
     activeTag = tag;
+    activeTagEl = tagEl;
+    tagEl.classList.add('active');
     applyFilter(tag);
   });
 });
@@ -1121,6 +1258,19 @@ const presentationGallery = document.getElementById('presentation-gallery');
 presentationToggle.addEventListener('click', () => {
   presentationGallery.classList.toggle('visible');
   presentationToggle.textContent = presentationGallery.classList.contains('visible') ? 'Hide Presentation' : 'See Presentation';
+});
+
+document.querySelectorAll('[data-readmore-toggle]').forEach(btn => {
+  const content = btn.nextElementSibling;
+  if (!content || !content.classList.contains('proj-readmore-content')) return;
+
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const isOpen = content.classList.toggle('is-open');
+    btn.classList.toggle('is-open', isOpen);
+    btn.textContent = isOpen ? 'Read less' : 'Read more';
+  });
 });
 
 const lightboxModal = document.getElementById('lightbox-modal');
