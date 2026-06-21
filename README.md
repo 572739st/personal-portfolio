@@ -1,9 +1,12 @@
-<img width="2862" height="1344" alt="image" src="https://github.com/user-attachments/assets/c6a1b954-7702-4db8-9599-b75117c4d9fa" />
-# Personal Portfolio — S1 · S2 · S3
+## Personal Portfolio — S1 · S2 · S3
 
 A responsive, interactive portfolio showcasing three semesters of things I worked on during my study at Fontys ICT.
 
 This project brings together 9 projects across 3 semesters into one structured portfolio experience.
+
+
+<img width="2862" height="1344" alt="image" src="https://github.com/user-attachments/assets/c6a1b954-7702-4db8-9599-b75117c4d9fa" />
+
 
 ---
 
