@@ -8,7 +8,7 @@ This project brings together 9 projects across 3 semesters into one structured p
 
 ## Live Demo
 
-
+(https://personal-portfolio-572739st.wasmer.app/)
 
 ---
 
