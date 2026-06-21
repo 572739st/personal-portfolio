@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -195,8 +195,9 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 .skill-hint {
   font-family: 'DM Mono', monospace;
-  font-size: 0.68rem; letter-spacing: 0.04em;
-  color: var(--ink-muted);
+  font-size: 0.78rem; letter-spacing: 0.04em;
+  font-weight: 700;
+  color: var(--accent);
   margin-top: 1.25rem;
   margin-bottom: 0.9rem;
 }
@@ -234,7 +235,7 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
   max-width: 540px; margin-bottom: 4rem;
 }
 
-.semester-block { margin-bottom: 5rem; }
+.semester-block { margin-bottom: 5rem; scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
 .semester-block:last-child { margin-bottom: 0; }
 .sem-header {
   display: flex; align-items: center; gap: 1.5rem;
@@ -268,6 +269,137 @@ h2.section-title em { font-style: italic; color: var(--accent-deep); }
 }
 .sem-divider {
   height: 1px; background: rgba(255,255,255,0.06); margin-top: 0.85rem; width: 100%;
+}
+
+/* === Semester Hierarchy Component (additive) === */
+.sem-hierarchy {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+  margin-bottom: 3rem;
+}
+.sem-hierarchy-block {
+  position: relative;
+  padding: 2rem 1.75rem;
+  border: 1px solid;
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+.sem-hierarchy-block .sh-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.sem-hierarchy-block .sh-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+.sem-hierarchy-block .sh-desc {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  color: rgba(247,244,239,0.45);
+  line-height: 1.5;
+}
+.sem-hierarchy-block .sh-cta {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.65;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.sem-hierarchy-block:hover .sh-cta { opacity: 1; transform: translateX(3px); }
+.sem-hierarchy-block:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.045);
+}
+.sem-hierarchy-block:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.sem-hierarchy-block:not(.sh-s3)::after {
+  content: '→';
+  position: absolute;
+  right: -1.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: rgba(247,244,239,0.2);
+}
+.sem-hierarchy-block.sh-s1 { border-color: #7fabd4; opacity: 0.88; }
+.sem-hierarchy-block.sh-s1 .sh-num, .sem-hierarchy-block.sh-s1 .sh-cta { color: #7fabd4; }
+.sem-hierarchy-block.sh-s1:hover { box-shadow: 0 10px 26px rgba(127,171,212,0.14); opacity: 1; }
+
+.sem-hierarchy-block.sh-s2 { border-color: #a990d4; opacity: 0.94; }
+.sem-hierarchy-block.sh-s2 .sh-num, .sem-hierarchy-block.sh-s2 .sh-cta { color: #a990d4; }
+.sem-hierarchy-block.sh-s2:hover { box-shadow: 0 10px 26px rgba(169,144,212,0.14); opacity: 1; }
+
+.sem-hierarchy-block.sh-s3 { border-color: #70c4a8; opacity: 1; }
+.sem-hierarchy-block.sh-s3 .sh-title { font-size: 1.65rem; }
+.sem-hierarchy-block.sh-s3 .sh-num, .sem-hierarchy-block.sh-s3 .sh-cta { color: #70c4a8; }
+.sem-hierarchy-block.sh-s3:hover { box-shadow: 0 10px 26px rgba(112,196,168,0.16); }
+
+/* === Progression Timeline (additive, standalone) === */
+.progression-timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 0 4rem;
+  padding: 0 0.5rem;
+}
+.progression-timeline .pt-line {
+  position: absolute;
+  left: 1rem; right: 1rem; top: 6px;
+  height: 2px;
+  background: linear-gradient(to right, #7fabd4, #a990d4, #70c4a8);
+  opacity: 0.6;
+}
+.pt-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  z-index: 1;
+}
+.pt-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+}
+.pt-s1 .pt-dot { background: #7fabd4; }
+.pt-s2 .pt-dot { background: #a990d4; }
+.pt-s3 .pt-dot { width: 17px; height: 17px; background: #70c4a8; }
+.pt-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.5);
+}
+@media (max-width: 960px) {
+  .sem-hierarchy { grid-template-columns: 1fr; gap: 1.25rem; }
+  .sem-hierarchy-block::after { display: none; }
+  .progression-timeline .pt-label { font-size: 0.56rem; }
 }
 
 .cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; }
@@ -651,17 +783,40 @@ footer {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 2rem;
-  color: var(--accent);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--ink);
   cursor: pointer;
-  background: none;
-  border: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
   z-index: 1001;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s, transform 0.2s, border-color 0.2s;
 }
 
 .lightbox-close:hover {
-  color: var(--ink);
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.08);
+}
+
+.modal-hint {
+  position: absolute;
+  top: 1.15rem;
+  left: 1.25rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.4);
+  z-index: 1001;
+  pointer-events: none;
 }
 
 .lightbox-nav {
@@ -737,17 +892,27 @@ footer {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 2rem;
-  color: var(--accent);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--ink);
   cursor: pointer;
-  background: none;
-  border: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
   z-index: 1001;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s, transform 0.2s, border-color 0.2s;
 }
 
 .video-close:hover {
-  color: var(--ink);
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.08);
 }
 @media (max-width: 960px) {
   nav { padding: 0 1.5rem; }
@@ -827,7 +992,7 @@ footer {
   <div class="about-grid">
     <div class="fade-up">
       <h2 class="section-title">Designer &<br><em>Developer</em></h2>
-      <p class="skill-hint">Click a skill to filter the projects relevant to it:</p>
+      <p class="skill-hint">Filter projects  by skill, tool or type project:</p>
       <div class="about-tags">
         <span class="skill-tag">HTML / CSS</span>
         <span class="skill-tag">JavaScript</span>
@@ -862,7 +1027,7 @@ footer {
         "Show, don't tell — I let the work speak."
       </div>
       <p>
-        Over three semesters I've worked with real clients — a <strong>rapper</strong> who needed an album trailer for his album release, a <strong>DJ/producer</strong> with zero branding, and the <strong>CZ Zorgvinder healthcare platform </strong>. I've also made things purely because I was immersed in it: a stunning icon archive, a travel guide webapp and much more.
+        Over three semesters I've worked with real clients — a <strong>rapper</strong> who needed an album trailer for his album release, a <strong>DJ/producer</strong> with zero branding, and the <strong>CZ Zorgvinder </strong>healthcare platform. I've also made things purely because I was immersed in it: a stunning icon archive, a travel guide webapp and much more.
       </p>
       <p>
         This portfolio is an honest record of my journey.
@@ -876,15 +1041,43 @@ footer {
   <h2 class="section-title" style="color:var(--paper);">Three Semesters,<br><em>Eight Projects</em></h2>
   <p class="projects-intro">Every project I made: real clients, personal obsessions, and the stuff that taught me the most. Research, iteration, my own hand in every pixel and line of code.</p>
 
+  <div class="sem-hierarchy" role="navigation" aria-label="Jump to semester">
+    <button type="button" class="sem-hierarchy-block sh-s1" data-scroll-target="semester-1">
+      <span class="sh-num">01 · Foundations</span>
+      <span class="sh-title">Semester 1</span>
+      <span class="sh-desc">4 projects · Game development, mobile app development, full-stack and UI/UX fundamentals.</span>
+      <span class="sh-cta">View projects ↓</span>
+    </button>
+    <button type="button" class="sem-hierarchy-block sh-s2" data-scroll-target="semester-2">
+      <span class="sh-num">02 · Client Work</span>
+      <span class="sh-title">Semester 2</span>
+      <span class="sh-desc">3 projects · UI/UX research, branding and documentary filmmaking.</span>
+      <span class="sh-cta">View projects ↓</span>
+    </button>
+    <button type="button" class="sem-hierarchy-block sh-s3" data-scroll-target="semester-3">
+      <span class="sh-num">03 · Specialization</span>
+      <span class="sh-title">Semester 3</span>
+      <span class="sh-desc">2 projects · Album trailer filmmaking and personal portfolio creation and development.</span>
+      <span class="sh-cta">View projects ↓</span>
+    </button>
+  </div>
+
+  <div class="progression-timeline" aria-hidden="true">
+    <div class="pt-line"></div>
+    <div class="pt-node pt-s1"><span class="pt-dot"></span><span class="pt-label">Semester 1</span></div>
+    <div class="pt-node pt-s2"><span class="pt-dot"></span><span class="pt-label">Semester 2</span></div>
+    <div class="pt-node pt-s3"><span class="pt-dot"></span><span class="pt-label">Semester 3</span></div>
+  </div>
+
   <div class="semester-heading">
     <div class="sem-divider"></div>
   </div>
-  <div class="semester-block fade-up delay-1">
+  <div class="semester-block fade-up delay-1" id="semester-3">
     <div class="sem-header">
       <span class="sem-pill s3">Semester 3</span>
-      <span class="sem-count">1 project</span>
+      <span class="sem-count">2 projects</span>
     </div>
-    <div class="cards-grid two-col center-single">
+    <div class="cards-grid two-col">
 
       <div class="proj-card green-card">
         <div class="proj-num">05</div>
@@ -906,7 +1099,26 @@ footer {
           <span class="proj-tag">Real Client Work</span>
         </div>
         <div class="proj-thumb-wrap">
-<img class="proj-thumb ov09-thumb" src="ov09 pic.png" alt="OV 09 album trailer thumbnail">          <button class="proj-yt proj-thumb-button proj-video" data-video-src="album trailer.mp4">Watch Trailer</button>
+<img class="proj-thumb ov09-thumb" src="assets/images/ov09 pic.png" alt="OV 09 album trailer thumbnail"><button class="proj-yt proj-thumb-button proj-video" data-video-src="">Watch Trailer</button>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card green-card">
+        <div class="proj-num">06</div>
+        <span class="proj-sem-tag s3-tag">Semester 3 · Personal</span>
+        <div class="proj-category">Web Design · Development</div>
+        <div class="proj-title">Personal Portfolio (This Website)</div>
+        <p class="proj-desc">This is my personal portfolio, built to present my work for internship opportunities, employment, and creative collaborations. It brings together projects from three semesters into one structured and easy-to-navigate overview.</p>
+        <button class="proj-readmore-btn" data-readmore-toggle>Read more</button>
+        <div class="proj-readmore-content">
+          <p>The portfolio was designed to organize and present my work in a clear, structured way while showing progression across three semesters. The goal was not just to display projects, but to create a cohesive system that reflects my development as a designer and developer.</p>
+          <p>Alongside structuring the content, I refined the design and built interactive features using HTML, CSS, and JavaScript. This includes filtering, expandable project sections, and media modals to improve usability and make exploring the work more engaging.</p>
+          <p>The main focus was balancing clarity, personality, and functionality so the portfolio feels both professional and personal. The final result is visible on the website you're on right now!</p>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">JavaScript</span>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -917,7 +1129,7 @@ footer {
   <div class="semester-heading">
     <div class="sem-divider"></div>
   </div>
-  <div class="semester-block fade-up">
+  <div class="semester-block fade-up" id="semester-2">
     <div class="sem-header">
       <span class="sem-pill s2">Semester 2</span>
       <span class="sem-count">3 projects</span>
@@ -937,7 +1149,7 @@ footer {
           <p>The challenge was balancing stakeholder requirements, user needs, and technical feasibility while maintaining a clean and accessible interface.</p>
         </div>
         <div class="proj-thumb-wrap">
-          <img class="proj-thumb" src="CZ Zorgvinder Homepage.png" alt="CZ Zorgvinder homepage">
+          <img class="proj-thumb" src="assets/images/CZ Zorgvinder Homepage.png" alt="CZ Zorgvinder homepage">
           <button class="proj-presentation proj-thumb-button" id="presentation-toggle">See Presentation</button>
         </div>
         <div class="proj-tags">
@@ -950,26 +1162,26 @@ footer {
           <span class="proj-tag">Real Client Work</span>
         </div>
         <div class="presentation-gallery" id="presentation-gallery">
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide1.PNG" alt="Slide 1"><div class="presentation-slide-num">01</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide2.PNG" alt="Slide 2"><div class="presentation-slide-num">02</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide3.PNG" alt="Slide 3"><div class="presentation-slide-num">03</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide4.PNG" alt="Slide 4"><div class="presentation-slide-num">04</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide5.PNG" alt="Slide 5"><div class="presentation-slide-num">05</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide6.PNG" alt="Slide 6"><div class="presentation-slide-num">06</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide7.PNG" alt="Slide 7"><div class="presentation-slide-num">07</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide8.PNG" alt="Slide 8"><div class="presentation-slide-num">08</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide9.PNG" alt="Slide 9"><div class="presentation-slide-num">09</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide10.PNG" alt="Slide 10"><div class="presentation-slide-num">10</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide11.PNG" alt="Slide 11"><div class="presentation-slide-num">11</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide12.PNG" alt="Slide 12"><div class="presentation-slide-num">12</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide13.PNG" alt="Slide 13"><div class="presentation-slide-num">13</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide14.PNG" alt="Slide 14"><div class="presentation-slide-num">14</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide15.PNG" alt="Slide 15"><div class="presentation-slide-num">15</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide16.PNG" alt="Slide 16"><div class="presentation-slide-num">16</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide17.PNG" alt="Slide 17"><div class="presentation-slide-num">17</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide18.PNG" alt="Slide 18"><div class="presentation-slide-num">18</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide19.PNG" alt="Slide 19"><div class="presentation-slide-num">19</div></div>
-          <div class="presentation-slide"><img src="powerpoint pictures/Slide20.PNG" alt="Slide 20"><div class="presentation-slide-num">20</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide1.PNG" alt="Slide 1"><div class="presentation-slide-num">01</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide2.PNG" alt="Slide 2"><div class="presentation-slide-num">02</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide3.PNG" alt="Slide 3"><div class="presentation-slide-num">03</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide4.PNG" alt="Slide 4"><div class="presentation-slide-num">04</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide5.PNG" alt="Slide 5"><div class="presentation-slide-num">05</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide6.PNG" alt="Slide 6"><div class="presentation-slide-num">06</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide7.PNG" alt="Slide 7"><div class="presentation-slide-num">07</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide8.PNG" alt="Slide 8"><div class="presentation-slide-num">08</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide9.PNG" alt="Slide 9"><div class="presentation-slide-num">09</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide10.PNG" alt="Slide 10"><div class="presentation-slide-num">10</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide11.PNG" alt="Slide 11"><div class="presentation-slide-num">11</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide12.PNG" alt="Slide 12"><div class="presentation-slide-num">12</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide13.PNG" alt="Slide 13"><div class="presentation-slide-num">13</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide14.PNG" alt="Slide 14"><div class="presentation-slide-num">14</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide15.PNG" alt="Slide 15"><div class="presentation-slide-num">15</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide16.PNG" alt="Slide 16"><div class="presentation-slide-num">16</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide17.PNG" alt="Slide 17"><div class="presentation-slide-num">17</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide18.PNG" alt="Slide 18"><div class="presentation-slide-num">18</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide19.PNG" alt="Slide 19"><div class="presentation-slide-num">19</div></div>
+          <div class="presentation-slide"><img src="assets/images/powerpoint pictures/Slide20.PNG" alt="Slide 20"><div class="presentation-slide-num">20</div></div>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -987,7 +1199,7 @@ footer {
           <p>The goal was to turn abstract brand values into a consistent visual identity while maintaining alignment with the client’s vision throughout the process.</p>
         </div>
         <div class="proj-thumb-wrap">
-          <img class="proj-thumb" src="thumbnail dp.jpg" alt="Documentary thumbnail">
+          <img class="proj-thumb" src="assets/images/thumbnail dp.jpg" alt="Documentary thumbnail">
           <a class="proj-yt proj-thumb-button" href="https://youtu.be/BCQuRxy_-ao?si=HscUUtQTuvP05Tgd">Watch on YouTube</a>
         </div>
         <div class="proj-tags">
@@ -1020,7 +1232,7 @@ footer {
           <span class="proj-tag">Culture</span>
         </div>
       <div class="proj-thumb-wrap web-wrap">
-  <img class="proj-thumb" src="interactive%20website%20pic.png" alt="Interactive website screenshot">
+  <img class="proj-thumb" src="assets/images/interactive website pic.png" alt="Interactive website screenshot">
 
   <a class="proj-yt proj-thumb-button web-btn"
      href="interactive website/index.html">
@@ -1036,7 +1248,7 @@ footer {
   <div class="semester-heading">
     <div class="sem-divider"></div>
   </div>
-  <div class="semester-block fade-up">
+  <div class="semester-block fade-up" id="semester-1">
       <div class="sem-header">
       <span class="sem-pill s1">Semester 1</span>
       <span class="sem-count">4 projects</span>
@@ -1061,8 +1273,8 @@ footer {
           <span class="proj-tag">Game Logic</span>
         </div>
         <div class="proj-thumb-wrap">
-          <img class="proj-thumb" src="mario game pic.png" alt="Super Mario browser game screenshot">
-          <a class="proj-game proj-thumb-button" href="mario game latest version/mario game/mario.html">Play Game</a>
+          <img class="proj-thumb" src="assets/images/mario game pic.png" alt="Super Mario browser game screenshot">
+          <a class="proj-game proj-thumb-button" href="mario game/mario.html">Play Game</a>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -1086,10 +1298,10 @@ footer {
           <span class="proj-tag">Mobile</span>
         </div>
         <div class="proj-thumb-wrap">
-  <img class="proj-thumb ptso-thumb" src="ptso pic.png" alt="PTSO app screenshot">
+  <img class="proj-thumb ptso-thumb" src="assets/images/ptso pic.png" alt="PTSO app screenshot">
 
   <button class="proj-yt proj-thumb-button proj-video"
-    data-video-src="ptso video.mp4">
+    data-video-src="assets/videos/ptso video.mp4">
     Watch Video
   </button>
 </div>
@@ -1115,8 +1327,8 @@ footer {
           <span class="proj-tag">Full-stack</span>
         </div>
         <div class="proj-thumb-wrap">
-          <img class="proj-thumb" src="cryptext pic.png" alt="Cryptext web app screenshot">
-          <button class="proj-yt proj-thumb-button proj-video" id="cryptext-video-btn" data-video-src="crypText screen recording 22 mei.mp4">Watch Video</button>
+          <img class="proj-thumb" src="assets/images/cryptext pic.png" alt="Cryptext web app screenshot">
+          <button class="proj-yt proj-thumb-button proj-video" id="cryptext-video-btn" data-video-src="assets/videos/crypText screen recording 22 mei.mp4">Watch Video</button>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -1139,8 +1351,8 @@ footer {
           <span class="proj-tag">Travel</span>
         </div>
         <div class="proj-thumb-wrap">
-          <img class="proj-thumb" src="arivana pic.png" alt="Arivana travel guide screenshot">
-          <button class="proj-yt proj-thumb-button proj-video" id="arivana-video-btn" data-video-src="Arivana screen recording.mp4">Watch Video</button>
+          <img class="proj-thumb" src="assets/images/arivana pic.png" alt="Arivana travel guide screenshot">
+          <button class="proj-yt proj-thumb-button proj-video" id="arivana-video-btn" data-video-src="assets/videos/Arivana screen recording.mp4">Watch Video</button>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
@@ -1158,8 +1370,8 @@ footer {
     </div>
     <div style="display:flex;flex-direction:column;justify-content:flex-end;">
       <ul class="footer-links">
-        <li><a href="mailto:your@email.com">Email me <span>↗</span></a></li>
-        <li><a href="#" target="_blank">GitHub <span>↗</span></a></li>
+        <li><a href="mailto:572739@student.fontys.nl">Email me <span>↗</span></a></li>
+        <li><a href="https://github.com/572739st/personal-portfolio" target="_blank">GitHub <span>↗</span></a></li>
       </ul>
     </div>
     <div class="footer-bottom">
@@ -1169,6 +1381,7 @@ footer {
 </footer>
 
 <div class="lightbox-modal" id="lightbox-modal">
+  <span class="modal-hint">Click outside to close</span>
   <button class="lightbox-close" id="lightbox-close">&times;</button>
   <div class="lightbox-content">
     <img class="lightbox-image" id="lightbox-image" src="" alt="Presentation slide">
@@ -1181,6 +1394,7 @@ footer {
 </div>
 
 <div class="video-modal" id="video-modal">
+  <span class="modal-hint">Click outside to close</span>
   <button class="video-close" id="video-close">&times;</button>
   <div class="video-content">
     <video class="video-element" id="video-element" controls>
@@ -1251,6 +1465,16 @@ const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('.sem-hierarchy-block[data-scroll-target]').forEach(block => {
+  block.addEventListener('click', () => {
+    const targetId = block.getAttribute('data-scroll-target');
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
 
 const presentationToggle = document.getElementById('presentation-toggle');
 const presentationGallery = document.getElementById('presentation-gallery');
